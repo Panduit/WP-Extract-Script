@@ -57,12 +57,12 @@ targetDir = new File(args[1]);
 batch = System.console().readLine("Batch ID (Wordpress): ") ?: "Wordpress"
 contentRoot = System.console().readLine("Content Root (Required): ")
 assert contentRoot
-dateFormat = System.console().readLine("Post Date Format (ex: yyyy/MM/): ")
+dateFormat = System.console().readLine("Post Date Format (ex: yyyy/MM/): ") ?: "yyyy/MM/"
 assetsRoot = System.console().readLine("Assets Root (Required): ")
 assert assetsRoot
 domain = System.console().readLine("Domain Name (Required): ")
 assert domain
-template = System.console().readLine("Migration Template (Required): ")
+template = System.console().readLine("Migration Template (Required): ") ?: "content"
 assert template
 download = System.console().readLine("Download Attachments (Y/N): ").toUpperCase() == 'Y'
 
@@ -133,8 +133,9 @@ void updateReplacementCfgFile() {
     replacementCfgFile.write(replacementCfg)
 }
 
-void downloadFile(String url, String localPath) {
-    def file = new File("work/source/${localPath}", targetDir)
+void downloadFile(String url, String path) {
+    def localPath = path.replaceAll("[/]", "\\\\")
+    def file = new File("work\\source\\${localPath}", targetDir)
     
     println "Downloading ${url} to ${file}"
     
@@ -190,7 +191,7 @@ void handlePost(Object item) {
         return
     }
     
-    def itemFile = new File("work/source/${item.post_name}.xml", targetDir)
+    def itemFile = new File("work\\source\\${item.post_name}.xml", targetDir)
     itemFile.getParentFile().mkdirs()
     println "Saving item to: ${itemFile}..."
 
