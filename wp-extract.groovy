@@ -57,7 +57,7 @@ targetDir = new File(args[1]);
 batch = System.console().readLine("Batch ID (Wordpress): ") ?: "Wordpress"
 contentRoot = System.console().readLine("Content Root (Required): ")
 assert contentRoot
-dateFormat = System.console().readLine("Post Date Format (ex: yyyy/MM/): ") ?: "yyyy/MM/"
+dateFormat = System.console().readLine("Post Date Format (ex: yyyy/MM/): ")
 assetsRoot = System.console().readLine("Assets Root (Required): ")
 assert assetsRoot
 domain = System.console().readLine("Domain Name (Required): ")
@@ -163,7 +163,7 @@ void handleAttachment(Object item){
     println "Handling attachment ${item.post_name}"
     
     def oldPath = item.attachment_url.text().replace(domain,'')
-    def newPath = "${assetsRoot}${oldPath.replace('wp-content/uploads/','')}"
+    def newPath = "${assetsRoot}${oldPath.replace('wp-content/uploads','')}"
     if(download){
         downloadFile(item.attachment_url.text(), oldPath)
     }
