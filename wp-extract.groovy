@@ -84,7 +84,7 @@ println 'Writing data files...'
 assetsCsv = new CSVWriter(new OutputStreamWriter(new FileOutputStream(new File("${batch}/asset-metadata.csv", targetDir)),ENCODING))
 assetsCsv.writeNext(['assetPath','dc:title{{String}}','dc:description{{String}}'] as String[])
 fileMappings = new CSVWriter(new OutputStreamWriter(new FileOutputStream(new File("${batch}/file-mappings.csv", targetDir)),ENCODING))
-fileMappings.writeNext(['Status','Source','Target'] as String[])
+fileMappings.writeNext(['Status','Source','Target','Id'] as String[])
 replacements = new CSVWriter(new OutputStreamWriter(new FileOutputStream(new File("${batch}/replacements.csv", targetDir)),ENCODING))
 replacements.writeNext(['Status','Source','Target'] as String[])
 pageCsv = new CSVWriter(new OutputStreamWriter(new FileOutputStream(new File("${batch}/page-mappings.csv", targetDir)),ENCODING))
@@ -169,6 +169,7 @@ void handleAttachment(Object item){
     
     def oldPath = item.attachment_url.text().replace(domain,'')
     def newPath = "${assetsRoot}${oldPath.replace('wp-content/uploads','')}"
+    def id = item.post_id
     if(download){
         downloadFile(item.attachment_url.text(), oldPath)
     }
@@ -178,7 +179,7 @@ void handleAttachment(Object item){
     assetsCsv.flush()
     
     println "Adding entry to file-mappings.csv for ${oldPath}"
-    fileMappings.writeNext(['Migrate',oldPath,newPath] as String[])
+    fileMappings.writeNext(['Migrate',oldPath,newPath,id] as String[])
     fileMappings.flush()
     
     println "Adding entry to replacements.csv for ${item.post_id}"
