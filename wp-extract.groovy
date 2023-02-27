@@ -5,6 +5,11 @@ import groovy.transform.Field
 import groovy.xml.XmlSlurper
 import groovy.xml.XmlUtil
 
+import java.io.Writer
+import java.io.OutputStreamWriter
+import java.io.FileOutputStream
+import java.nio.charset.StandardCharsets
+
 import java.text.SimpleDateFormat
 
 @Grab('com.opencsv:opencsv:4.5')
@@ -195,8 +200,9 @@ void handlePost(Object item) {
     itemFile.getParentFile().mkdirs()
     println "Saving item to: ${itemFile}..."
 
+    Writer writer = new OutputStreamWriter(new FileOutputStream(itemFile), StandardCharsets.UTF_8)
     XmlUtil xmlUtil = new XmlUtil()
-    xmlUtil.serialize(item, new FileWriter(itemFile))
+    xmlUtil.serialize(item, writer)
     
     println "Adding line to page mappings for: ${item.post_name}.xml"
     def date = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").parse(item.post_date.text())
