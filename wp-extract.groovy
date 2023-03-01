@@ -104,8 +104,8 @@ void updateFilterXml() {
         <exclude pattern="${{contentRootPath}}/jcr:content" />
     </filter>
     <filter root="${{contentDamRoot}}"/>
-    <filter root="/content/_cq_tags/panduit-blog-categories" mode="merge"/>
-	<filter root="/content/_cq_tags/panduit/blog-tags" mode="merge"/>
+    <filter root="/content/cq:tags/panduit-blog-categories" mode="merge"/>
+	<filter root="/content/cq:tags/panduit/blog-tags" mode="merge"/>
     <filter root="/content/dam/panduit/content-fragments" mode="merge"/>
 </workspaceFilter>
 '''
