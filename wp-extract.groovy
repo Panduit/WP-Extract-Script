@@ -60,12 +60,12 @@ if(args.length < 2) {
 println "Pre-processing WordPress Export ${args[0]} to ${args[1]}"
 targetDir = new File(args[1]);
 batch = System.console().readLine("Batch ID (Wordpress): ") ?: "Wordpress"
-contentRoot = System.console().readLine("Content Root (Required): ")
+contentRoot = System.console().readLine("Content Root (Required): ") ?: "/content/panduit/language-masters/en/about/blogs"
 assert contentRoot
 dateFormat = System.console().readLine("Post Date Format (ex: yyyy/MM/): ")
-assetsRoot = System.console().readLine("Assets Root (Required): ")
+assetsRoot = System.console().readLine("Assets Root (Required): ") ?: "/content/dam/panduit/en/blogs"
 assert assetsRoot
-domain = System.console().readLine("Domain Name (Required): ")
+domain = System.console().readLine("Domain Name (Required): ") ?: "https://panduitblog.com/"
 assert domain
 template = System.console().readLine("Migration Template (Required): ") ?: "content"
 assert template
