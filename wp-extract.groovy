@@ -100,10 +100,13 @@ def inXml = new XmlSlurper(false,true).parseText(new File(args[0]).getText(ENCOD
 void updateFilterXml() {
     def filterCfg = '''<?xml version="1.0" encoding="UTF-8"?>
 <workspaceFilter version="1.0">
-    <filter root="${{contentRootPath}}">
+    <filter root="${{contentRootPath}}" mode="merge">
         <exclude pattern="${{contentRootPath}}/jcr:content" />
     </filter>
     <filter root="${{contentDamRoot}}"/>
+    <filter root="/content/_cq_tags/panduit-blog-categories" mode="merge"/>
+	<filter root="/content/_cq_tags/panduit/blog-tags" mode="merge"/>
+    <filter root="/content/dam/panduit/content-fragments" mode="merge"/>
 </workspaceFilter>
 '''
     filterCfg = filterCfg.replace('${{contentRootPath}}', contentRoot)
